@@ -11,7 +11,7 @@ namespace TDDUnitTestImplementation
     [TestFixture] 
     public class Test
     {
-        private VendingMachine _vendingMachine = new VendingMachine();
+        private readonly VendingMachine _vendingMachine = new VendingMachine();
         private Products _products = new Products();
 
         [Test, Sequential]
@@ -67,6 +67,15 @@ namespace TDDUnitTestImplementation
             var result = _vendingMachine.CancelRequest(true, money);
 
             Assert.AreEqual(money.Sum(), result);
+        }
+
+        [Test, Sequential]
+        public void WhenUserBuys_ThenItAllowToBuyProductsOnTheSequence([Values(1,2,3,4,5,6)] int productId)
+        {
+            var money = new List<double>(){100,100,100,100,100};
+            var result = _vendingMachine.BuyProduct(money, productId);
+
+            Assert.IsTrue(result.IsSuccessful);
         }
     }
 }
